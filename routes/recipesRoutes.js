@@ -1,0 +1,17 @@
+const express = require('express');
+const recipesController = require('../controllers/recipes');
+const vegrecipeController = require('../controllers/vegrecipes');
+const nonvegrecipeController = require('../controllers/nonvegrecipes');
+const dessertrecipeController = require('../controllers/desserts');
+const beveragerecipeController = require('../controllers/beverages');
+const singlerecipesController = require('../controllers/singlerecipe');
+const recipesRouter = express.Router();
+const authMiddleware = require('../middleware/authMiddleware');
+recipesRouter.post('/', authMiddleware.verifyToken, recipesController.recipes);
+recipesRouter.get('/', recipesController.viewAllPosts);
+recipesRouter.get('/:id', singlerecipesController.getRecipeById);
+recipesRouter.post('/vegetarian', vegrecipeController.getVegetarianRecipes);
+recipesRouter.post('/nonvegetarian', nonvegrecipeController.getNonVegetarianRecipes);
+recipesRouter.post('/desserts', dessertrecipeController.getDessertRecipes);
+recipesRouter.post('/beverages', beveragerecipeController.getBeveragesRecipes);
+module.exports = recipesRouter;
